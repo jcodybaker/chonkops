@@ -2,4 +2,9 @@ package devices
 
 import "context"
 
-func Run(ctx context.Context) error {}
+type Devices []Device
+
+func Run(ctx context.Context) error {
+	<-ctx.Done()
+	return nil
+}

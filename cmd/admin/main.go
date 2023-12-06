@@ -62,6 +62,7 @@ func main() {
 	go func() {
 		defer wg.Done()
 		defer cancel()
+		log.Info().Str("addr", s.Addr).Msg("starting http server")
 		if err := s.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Error().Err(err).Msg("running server")
 		}
