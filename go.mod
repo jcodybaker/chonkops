@@ -3,6 +3,8 @@ module github.com/jcodybaker/chonkops
 go 1.21.1
 
 require (
+	github.com/go-logr/logr v1.4.1
+	github.com/go-logr/zerologr v1.2.3
 	github.com/hashicorp/mdns v1.0.5
 	github.com/jcodybaker/go-shelly v0.0.0-20231227170137-e083db1af0b2
 	github.com/mongoose-os/mos v0.0.0-20230313140341-b44964e63a92
@@ -10,6 +12,7 @@ require (
 	github.com/spf13/viper v1.17.0
 	github.com/stretchr/testify v1.8.4
 	go.temporal.io/sdk v1.24.0
+	k8s.io/klog/v2 v2.110.1
 )
 
 require (
@@ -24,7 +27,6 @@ require (
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
-	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogo/googleapis v1.4.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -83,5 +85,4 @@ require (
 	google.golang.org/protobuf v1.32.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/klog/v2 v2.110.1 // indirect
 )
