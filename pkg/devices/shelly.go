@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"net"
-	"net/http"
 	"net/url"
 	"strconv"
 
@@ -19,7 +18,9 @@ const (
 	defaultShellyMDNSServiceName = "_shelly._tcp"
 )
 
-func NewShellyDiscover(opts ...ShellyOption) Discoverer
+func NewShellyDiscover(opts ...ShellyOption) Discoverer {
+	return &shellyDiscover{}
+}
 
 type ShellyOption func(d *shellyDiscover)
 
@@ -48,7 +49,7 @@ func (d *shellyDiscover) Discover(ctx context.Context) ([]Device, error) {
 	for se := range serviceEntries {
 		d, err := serviceEntryToShellyDevices(ctx, se)
 		if err != nil {
-
+			log.Error().Err(err).Msg("converting shelly entry to devices")
 		}
 		if d == nil {
 			continue
@@ -86,7 +87,7 @@ func serviceEntryToShellyDevices(ctx context.Context, se *mdns.ServiceEntry) ([]
 		resp, _, err := req.Do(ctx, c)
 		if err != nil {
 			var statusErr *shelly.BadStatusError
-			if !errors.As(err, &statusErr) || statusErr.Status != http.StatusNotFound {
+			if !errors.As(err, &statusErr) || statusErr.Status != shelly.StatusIDNotFound {
 				return nil, err
 			}
 			break // error is a NOT found, meaning this switch doesn't exist. stop.
