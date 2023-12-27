@@ -97,9 +97,10 @@ func serviceEntryToShellyDevices(ctx context.Context, se *mdns.ServiceEntry) ([]
 			name = *resp.Name
 		}
 		devices = append(devices, &shellyDevice{
-			name: name,
-			addr: rpcAddr,
-			port: se.Port,
+			name:     name,
+			addr:     rpcAddr,
+			port:     se.Port,
+			switchID: i,
 		})
 	}
 	return devices, nil

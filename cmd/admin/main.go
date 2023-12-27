@@ -12,11 +12,17 @@ import (
 	"sync"
 	"time"
 
+	golog "log"
+
+	"github.com/go-logr/zerologr"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	klog "k8s.io/klog/v2"
 
 	"github.com/jcodybaker/chonkops/pkg/admin"
 	"github.com/jcodybaker/chonkops/pkg/devices"
+	"github.com/jcodybaker/chonkops/pkg/logcompat"
 )
 
 const defaultAddr = ":8080"
@@ -29,6 +35,10 @@ func main() {
 
 	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
 	viper.AutomaticEnv()
+
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+	klog.SetLogger(zerologr.New(&log.Logger))
+	golog.SetOutput(logcompat.DefaultLogWriter)
 
 	addr := defaultAddr
 	if port := viper.GetInt("port"); port != 0 {
